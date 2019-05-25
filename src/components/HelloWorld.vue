@@ -95,6 +95,7 @@
         const service = await device.gatt.getPrimaryService(this.USER_SERVICE_UUID)
         service.getCharacteristic(this.LED_CHARACTERISTIC_UUID).then(characteristic => {
           window.ledCharacteristic = characteristic
+          sendData()
           this.bleConnect = true
           this.bleStatus = `デバイスに接続しました！`
         }).catch(error => {
