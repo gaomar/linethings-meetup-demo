@@ -29,6 +29,7 @@
 
         <v-flex xs12>
           {{this.bleStatus}}
+          <v-btn @click="sendData">送信</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
