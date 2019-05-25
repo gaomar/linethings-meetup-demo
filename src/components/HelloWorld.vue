@@ -29,7 +29,6 @@
 
         <v-flex xs12>
           {{this.bleStatus}}
-          <v-btn @click="this.sendData()">送信</v-btn>
         </v-flex>
       </v-layout>
     </v-container>
@@ -57,13 +56,8 @@
     methods: {
       setCanSubmit () {
         this.canSubmit = true
-        this.state = !this.state
       },
       say () {
-        if (!this.canSubmit) {
-          return
-        }
-        this.canSubmit = false
         this.sendData()
       },
       sendData () {
