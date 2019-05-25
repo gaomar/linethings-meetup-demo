@@ -46,6 +46,7 @@
         canSubmit: false,
         bleStatus: '',
         state: false,
+        characteristic: '',
         code: '',
         user: {
           image: '',
@@ -67,7 +68,7 @@
       },
       sendData () {
         this.bleStatus = `送信:${this.state}`
-        window.ledCharacteristic.writeValue(
+        this.characteristic.writeValue(
           state ? new Uint8Array([0x01]) : new Uint8Array([0x00])
         ).catch(error => {
           this.bleStatus = error.message
@@ -94,13 +95,13 @@
         await device.gatt.connect()
         const service = await device.gatt.getPrimaryService(this.USER_SERVICE_UUID)
         service.getCharacteristic(this.LED_CHARACTERISTIC_UUID).then(characteristic => {
-          window.ledCharacteristic = characteristic
-          sendData()
+          this.characteristic = characteristic
           this.bleConnect = true
           this.bleStatus = `デバイスに接続しました！`
+          this.characteristic.writeValue(state ? new Uint8Array([0x01]) : new Uint8Array([0x00]))
         }).catch(error => {
           this.bleConnect = true
-          this.bleStatus = `デバイス接続に失敗`
+          this.bleStatus = `デバイス接続に失敗=${error.message}`
         })
       },
       initializeLiff: async function(){
