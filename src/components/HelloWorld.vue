@@ -67,9 +67,14 @@
         this.sendData()
       },
       sendData () {
-        this.bleStatus = `送信:${this.state}`
-        this.characteristic.writeValue(
-          this.state ? new Uint8Array([0x01]) : new Uint8Array([0x00])
+        this.bleStatus = `送信:${this.code}`
+
+        let ch_array = this.code.split("");
+        for(let i = 0; i < 16; i = i + 1){
+          ch_array[i] = (new TextEncoder('ascii')).encode(ch_array[i]);
+        }
+
+        this.characteristic.writeValue(new Uint8Array(ch_array)
         ).catch(error => {
           this.bleStatus = error.message
         })
