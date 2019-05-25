@@ -65,6 +65,7 @@
         this.sendData()
       },
       sendData () {
+        this.bleStatus = `送信:${this.state}`
         window.ledCharacteristic.writeValue(
           state ? new Uint8Array([0x01]) : new Uint8Array([0x00])
         ).catch(error => {
