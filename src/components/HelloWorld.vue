@@ -42,7 +42,6 @@
       return {
         USER_SERVICE_UUID: 'b38c905b-9968-45b8-b392-04e62b8a7842',
         LED_CHARACTERISTIC_UUID: 'E9062E71-9E62-4BC6-B0D3-35CDCD9B027B',
-        PSDI_SERVICE_UUID: 'E625601E-9E55-4597-A598-76018A0D293D',
         bleConnect: false,
         canSubmit: false,
         bleStatus: '',
@@ -95,12 +94,11 @@
         const device = await liff.bluetooth.requestDevice()
         await device.gatt.connect()
         const service = await device.gatt.getPrimaryService(this.USER_SERVICE_UUID)
-        await device.gatt.getPrimaryService(PSDI_SERVICE_UUID)
         service.getCharacteristic(this.LED_CHARACTERISTIC_UUID).then(characteristic => {
           this.characteristic = characteristic
           this.bleConnect = true
           this.bleStatus = `デバイスに接続しました！`
-          // this.characteristic.writeValue(state ? new Uint8Array([0x01]) : new Uint8Array([0x00]))
+          this.characteristic.writeValue(new Uint8Array([0x01]))
         }).catch(error => {
           this.bleConnect = true
           this.bleStatus = `デバイス接続に失敗=${error.message}`
