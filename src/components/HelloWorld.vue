@@ -91,9 +91,14 @@
         const device = await liff.bluetooth.requestDevice()
         await device.gatt.connect()
         const service = await device.gatt.getPrimaryService(this.USER_SERVICE_UUID)
-        window.ledCharacteristic = await service.getCharacteristic(this.LED_CHARACTERISTIC_UUID)
-        this.bleConnect = true
-        this.bleStatus = `デバイスに接続しました。`
+        service.getCharacteristic(this.LED_CHARACTERISTIC_UUID).then(characteristic => {
+          window.ledCharacteristic = characteristic
+          this.bleConnect = true
+          this.bleStatus = `デバイスに接続しました！`
+        }).catch(error => {
+          this.bleConnect = true
+          this.bleStatus = `デバイス接続に失敗`
+        })
       },
       initializeLiff: async function(){
         await liff.initPlugins(['bluetooth']);
