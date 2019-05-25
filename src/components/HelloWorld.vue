@@ -16,7 +16,7 @@
             <v-container>
               <v-layout row wrap>
                 <v-text-field
-                  v-model="name"
+                  v-model="code"
                   @keyup.enter="say"
                   @keypress="setCanSubmit"
                   outline
@@ -44,6 +44,8 @@
         bleConnect: false,
         canSubmit: false,
         bleStatus: '',
+        state: false,
+        code: '',
         user: {
           image: '',
           userId: ''
@@ -53,6 +55,21 @@
     methods: {
       setCanSubmit () {
         this.canSubmit = true
+        this.state = !this.state
+      },
+      say () {
+        if (!this.canSubmit) {
+          return
+        }
+        this.canSubmit = false
+        this.sendData()
+      },
+      sendData () {
+        window.ledCharacteristic.writeValue(
+          state ? new Uint8Array([0x01]) : new Uint8Array([0x00])
+        ).catch(error => {
+          this.bleStatus = error.message
+        })
       },
       // BLEが接続できる状態になるまでリトライ
       liffCheckAvailablityAndDo: async function (callbackIfAvailable) {
