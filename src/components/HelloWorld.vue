@@ -98,7 +98,7 @@
           this.characteristic = characteristic
           this.bleConnect = true
           this.bleStatus = `デバイスに接続しました！`
-          this.characteristic.writeValue(state ? new Uint8Array([0x01]) : new Uint8Array([0x00]))
+          // this.characteristic.writeValue(state ? new Uint8Array([0x01]) : new Uint8Array([0x00]))
         }).catch(error => {
           this.bleConnect = true
           this.bleStatus = `デバイス接続に失敗=${error.message}`
