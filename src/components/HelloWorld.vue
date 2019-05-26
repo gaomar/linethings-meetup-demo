@@ -39,7 +39,7 @@
   export default {
     data () {
       return {
-        USER_SERVICE_UUID: 'e4a93c43-f923-4c1f-9091-6172ec39ec81',
+        USER_SERVICE_UUID: '57248226-218c-45b9-adf3-6a959749db45',
         LED_CHARACTERISTIC_UUID: 'E9062E71-9E62-4BC6-B0D3-35CDCD9B027B',
         bleConnect: false,
         canSubmit: false,
